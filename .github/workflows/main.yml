@@ -1,0 +1,29 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Repository ko checkout karein taake code actions runner par aa jaye
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # 2. Agar Node.js project hai toh environment setup karne ke liye (agar zaroorat ho toh rakhein warna hata sakte hain)
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    # 3. Basic Test / Build Step
+    - name: Run Build or Test
+      run: |
+        echo "GlobalNeedFinder workflow started successfully!"
+        echo "Running build tasks..."
+        # Yahan aap apne project ki commands likh sakte hain (maslan npm install wagairah)
