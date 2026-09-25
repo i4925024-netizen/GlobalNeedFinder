@@ -1,0 +1,6 @@
+{
+  "name": "NeedFinderGlobal",
+  "description": "Tell us what you need. Find who can provide it. A global marketplace connecting customers with verified providers for products, services, property, vehicles, jobs, and more.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

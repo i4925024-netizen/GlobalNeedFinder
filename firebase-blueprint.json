@@ -1,0 +1,271 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document containing account settings and identity details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The user's UID" },
+        "displayName": { "type": "string", "minLength": 2, "maxLength": 100, "description": "Full name of the user" },
+        "email": { "type": "string", "format": "email", "description": "User email address" },
+        "photoURL": { "type": "string", "description": "User profile avatar URL" },
+        "phone": { "type": "string", "maxLength": 30, "description": "Contact phone number" },
+        "country": { "type": "string", "maxLength": 100, "description": "Country of residence" },
+        "city": { "type": "string", "maxLength": 100, "description": "City of residence" },
+        "accountType": { "type": "string", "enum": ["customer", "provider", "both"], "description": "Role mode chosen by user" },
+        "bio": { "type": "string", "maxLength": 1000, "description": "Brief biography or summary" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "displayName", "email", "accountType", "createdAt"]
+    },
+    "ProviderProfile": {
+      "title": "ProviderProfile",
+      "description": "Public and business information for service or product providers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The provider's UID" },
+        "userId": { "type": "string", "description": "The linked user UID" },
+        "businessName": { "type": "string", "minLength": 2, "maxLength": 120, "description": "Business or trade name" },
+        "logoUrl": { "type": "string", "description": "Logo or avatar URL" },
+        "bio": { "type": "string", "maxLength": 2000, "description": "Description of services and background" },
+        "country": { "type": "string", "maxLength": 100, "description": "Primary country of operation" },
+        "city": { "type": "string", "maxLength": 100, "description": "Primary city of operation" },
+        "serviceAreas": { "type": "string", "description": "Areas covered by provider" },
+        "categories": { "type": "string", "description": "Categories served" },
+        "phone": { "type": "string", "maxLength": 30, "description": "Contact phone" },
+        "email": { "type": "string", "format": "email", "description": "Public contact email" },
+        "website": { "type": "string", "maxLength": 200, "description": "Official website URL" },
+        "showEmail": { "type": "string", "description": "Email visibility boolean string" },
+        "showPhone": { "type": "string", "description": "Phone visibility boolean string" },
+        "isVerified": { "type": "string", "description": "Verification status flag" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["id", "userId", "businessName", "country", "city", "createdAt"]
+    },
+    "Need": {
+      "title": "Need",
+      "description": "A customer requirement or request for a product, service, property, job, etc.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique need identifier" },
+        "ownerId": { "type": "string", "description": "UID of the customer who posted the need" },
+        "ownerName": { "type": "string", "maxLength": 100, "description": "Display name of customer" },
+        "ownerEmail": { "type": "string", "description": "Customer contact email" },
+        "title": { "type": "string", "minLength": 5, "maxLength": 120, "description": "Requirement title" },
+        "category": { "type": "string", "maxLength": 50, "description": "Category slug" },
+        "country": { "type": "string", "maxLength": 100, "description": "Target country" },
+        "city": { "type": "string", "maxLength": 100, "description": "Target city" },
+        "description": { "type": "string", "minLength": 20, "maxLength": 3000, "description": "Detailed description of the requirement" },
+        "budgetMin": { "type": "number", "description": "Minimum budget amount" },
+        "budgetMax": { "type": "number", "description": "Maximum budget amount" },
+        "currency": { "type": "string", "maxLength": 10, "description": "Currency code (USD, EUR, GBP, etc.)" },
+        "preferredCondition": { "type": "string", "maxLength": 50, "description": "Condition preference (new, used, etc.)" },
+        "urgency": { "type": "string", "enum": ["low", "medium", "high", "urgent"], "description": "Urgency level" },
+        "expiryDate": { "type": "string", "description": "Date by when the need expires" },
+        "contactPreference": { "type": "string", "maxLength": 50, "description": "Preferred contact mode" },
+        "status": { "type": "string", "enum": ["OPEN", "IN_PROGRESS", "FULFILLED", "CLOSED", "EXPIRED"], "description": "Current lifecycle status" },
+        "offersCount": { "type": "number", "description": "Number of received provider offers" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["ownerId", "title", "category", "country", "city", "description", "status", "createdAt"]
+    },
+    "Listing": {
+      "title": "Listing",
+      "description": "A provider catalogue listing offering products, services, vehicles, etc.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique listing identifier" },
+        "providerId": { "type": "string", "description": "UID of the provider" },
+        "providerName": { "type": "string", "maxLength": 120, "description": "Provider business or display name" },
+        "title": { "type": "string", "minLength": 5, "maxLength": 120, "description": "Listing title" },
+        "category": { "type": "string", "maxLength": 50, "description": "Category slug" },
+        "description": { "type": "string", "minLength": 20, "maxLength": 3000, "description": "Description of what is offered" },
+        "price": { "type": "number", "description": "Offering price or starting rate" },
+        "currency": { "type": "string", "maxLength": 10, "description": "Currency code" },
+        "country": { "type": "string", "maxLength": 100, "description": "Country" },
+        "city": { "type": "string", "maxLength": 100, "description": "City" },
+        "condition": { "type": "string", "maxLength": 50, "description": "Item or service condition" },
+        "availability": { "type": "string", "maxLength": 100, "description": "Stock or calendar availability" },
+        "imageUrl": { "type": "string", "description": "Listing preview photo URL" },
+        "active": { "type": "boolean", "description": "Whether the listing is currently active" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["providerId", "providerName", "title", "category", "description", "price", "currency", "country", "city", "active", "createdAt"]
+    },
+    "Offer": {
+      "title": "Offer",
+      "description": "A formal bid or proposal from a provider responding to a customer need",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique offer identifier" },
+        "needId": { "type": "string", "description": "Target need document ID" },
+        "needTitle": { "type": "string", "maxLength": 120, "description": "Title of the referenced need" },
+        "customerId": { "type": "string", "description": "UID of the customer who posted the need" },
+        "providerId": { "type": "string", "description": "UID of the provider making the offer" },
+        "providerName": { "type": "string", "maxLength": 120, "description": "Provider display name" },
+        "message": { "type": "string", "minLength": 10, "maxLength": 2000, "description": "Offer proposal details" },
+        "proposedPrice": { "type": "number", "description": "Bid price or quote" },
+        "currency": { "type": "string", "maxLength": 10, "description": "Currency code" },
+        "estimatedDelivery": { "type": "string", "maxLength": 100, "description": "Estimated timeframe or delivery date" },
+        "availability": { "type": "string", "maxLength": 100, "description": "Provider availability statement" },
+        "status": { "type": "string", "enum": ["PENDING", "ACCEPTED", "REJECTED", "WITHDRAWN"], "description": "Offer status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["needId", "customerId", "providerId", "providerName", "message", "proposedPrice", "currency", "status", "createdAt"]
+    },
+    "Conversation": {
+      "title": "Conversation",
+      "description": "A secure direct messaging thread between a customer and provider",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique conversation ID" },
+        "needId": { "type": "string", "description": "Associated need ID" },
+        "needTitle": { "type": "string", "description": "Associated need title" },
+        "offerId": { "type": "string", "description": "Associated offer ID if any" },
+        "lastMessageText": { "type": "string", "maxLength": 1000, "description": "Snippet of latest message" },
+        "lastMessageSenderId": { "type": "string", "description": "Sender ID of latest message" },
+        "lastMessageTimestamp": { "type": "string", "format": "date-time", "description": "Timestamp of latest message" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Update timestamp" }
+      },
+      "required": ["createdAt", "updatedAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "An individual chat message inside a conversation thread",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique message identifier" },
+        "conversationId": { "type": "string", "description": "Parent conversation ID" },
+        "senderId": { "type": "string", "description": "UID of the message author" },
+        "senderName": { "type": "string", "maxLength": 100, "description": "Author display name" },
+        "text": { "type": "string", "minLength": 1, "maxLength": 2000, "description": "Message body text" },
+        "read": { "type": "boolean", "description": "Whether message has been read" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["conversationId", "senderId", "senderName", "text", "createdAt"]
+    },
+    "Notification": {
+      "title": "Notification",
+      "description": "In-app notifications for status updates, new offers, and communications",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique notification ID" },
+        "userId": { "type": "string", "description": "Recipient UID" },
+        "type": { "type": "string", "enum": ["NEW_OFFER", "OFFER_ACCEPTED", "OFFER_REJECTED", "NEW_MESSAGE", "STATUS_CHANGE"], "description": "Notification category" },
+        "title": { "type": "string", "maxLength": 120, "description": "Header text" },
+        "body": { "type": "string", "maxLength": 500, "description": "Detailed notification text" },
+        "relatedId": { "type": "string", "description": "Referenced entity ID (need, offer, conversation)" },
+        "read": { "type": "boolean", "description": "Read flag" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp" }
+      },
+      "required": ["userId", "type", "title", "body", "read", "createdAt"]
+    },
+    "SavedNeed": {
+      "title": "SavedNeed",
+      "description": "A saved/bookmarked customer need for quick access",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique saved document ID" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "needId": { "type": "string", "description": "Referenced need ID" },
+        "needTitle": { "type": "string", "description": "Referenced need title" },
+        "category": { "type": "string", "description": "Category slug" },
+        "country": { "type": "string", "description": "Country" },
+        "city": { "type": "string", "description": "City" },
+        "budgetMax": { "type": "number", "description": "Budget ceiling" },
+        "currency": { "type": "string", "description": "Currency code" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Bookmark timestamp" }
+      },
+      "required": ["userId", "needId", "needTitle", "createdAt"]
+    },
+    "SavedListing": {
+      "title": "SavedListing",
+      "description": "A saved/bookmarked provider listing",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique saved listing ID" },
+        "userId": { "type": "string", "description": "Owner UID" },
+        "listingId": { "type": "string", "description": "Referenced listing ID" },
+        "listingTitle": { "type": "string", "description": "Referenced listing title" },
+        "category": { "type": "string", "description": "Category slug" },
+        "country": { "type": "string", "description": "Country" },
+        "city": { "type": "string", "description": "City" },
+        "price": { "type": "number", "description": "Price" },
+        "currency": { "type": "string", "description": "Currency code" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Bookmark timestamp" }
+      },
+      "required": ["userId", "listingId", "listingTitle", "createdAt"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "User moderation report for suspicious, abusive, or invalid content",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique report ID" },
+        "reporterId": { "type": "string", "description": "UID of the user filing the report" },
+        "reporterEmail": { "type": "string", "description": "Reporter email address" },
+        "targetType": { "type": "string", "enum": ["need", "provider", "listing", "message"], "description": "Type of content reported" },
+        "targetId": { "type": "string", "description": "ID of target document" },
+        "targetTitle": { "type": "string", "maxLength": 150, "description": "Title or reference of reported item" },
+        "reason": { "type": "string", "maxLength": 100, "description": "Report category" },
+        "details": { "type": "string", "minLength": 10, "maxLength": 2000, "description": "Description of violation" },
+        "status": { "type": "string", "enum": ["OPEN", "REVIEWING", "RESOLVED", "DISMISSED"], "description": "Moderation status" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Submission timestamp" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Status update timestamp" }
+      },
+      "required": ["reporterId", "targetType", "targetId", "reason", "details", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profile records restricted to owner or admin"
+    },
+    "/providerProfiles/{providerId}": {
+      "schema": { "$ref": "#/entities/ProviderProfile" },
+      "description": "Public provider profiles with editable access by the provider"
+    },
+    "/needs/{needId}": {
+      "schema": { "$ref": "#/entities/Need" },
+      "description": "Customer needs publicly readable, editable and deletable by the owner"
+    },
+    "/listings/{listingId}": {
+      "schema": { "$ref": "#/entities/Listing" },
+      "description": "Provider catalog listings publicly readable when active, editable by provider"
+    },
+    "/offers/{offerId}": {
+      "schema": { "$ref": "#/entities/Offer" },
+      "description": "Provider offers readable by provider and target need owner, manageable by both"
+    },
+    "/conversations/{conversationId}": {
+      "schema": { "$ref": "#/entities/Conversation" },
+      "description": "Direct message thread readable and writable only by participants"
+    },
+    "/conversations/{conversationId}/messages/{messageId}": {
+      "schema": { "$ref": "#/entities/Message" },
+      "description": "Individual messages in a conversation accessible only by participants"
+    },
+    "/notifications/{notificationId}": {
+      "schema": { "$ref": "#/entities/Notification" },
+      "description": "Private user notifications accessible only by recipient"
+    },
+    "/savedNeeds/{savedNeedId}": {
+      "schema": { "$ref": "#/entities/SavedNeed" },
+      "description": "Private saved needs accessible only by bookmark owner"
+    },
+    "/savedListings/{savedListingId}": {
+      "schema": { "$ref": "#/entities/SavedListing" },
+      "description": "Private saved listings accessible only by bookmark owner"
+    },
+    "/reports/{reportId}": {
+      "schema": { "$ref": "#/entities/Report" },
+      "description": "Content reports created by authenticated users and managed by admins"
+    }
+  }
+}
