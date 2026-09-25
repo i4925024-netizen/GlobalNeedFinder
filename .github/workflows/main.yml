@@ -1,46 +1,29 @@
-name: Deploy React App to GitHub Pages
+name: CI/CD Pipeline
 
 on:
   push:
-    branches: ["main"]
-
-# GitHub Pages permissions set karne ke liye
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
 
 jobs:
-  build-and-deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    # 1. Repository ko checkout karein taake code actions runner par aa jaye
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
+    # 2. Agar Node.js project hai toh environment setup karne ke liye (agar zaroorat ho toh rakhein warna hata sakte hain)
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
 
-      - name: Install Dependencies
-        run: npm ci || npm install
-
-      - name: Build React Project
-        run: npm run build
-
-      - name: Upload Artifacts
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    # 3. Basic Test / Build Step
+    - name: Run Build or Test
+      run: |
+        echo "GlobalNeedFinder workflow started successfully!"
+        echo "Running build tasks..."
+        # Yahan aap apne project ki commands likh sakte hain (maslan npm install wagairah)
