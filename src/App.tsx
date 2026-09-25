@@ -40,10 +40,18 @@ import { TermsPage } from './pages/TermsPage';
 
 function getAppPath(pathname: string = window.location.pathname): string {
   let path = pathname || '/';
-  if (path.startsWith('/GlobalNeedFinder')) {
-    path = path.replace(/^\/GlobalNeedFinder/, '') || '/';
+  
+  // Case-insensitive match & remove base path
+  if (path.toLowerCase().startsWith('/globalneedfinder')) {
+    path = path.replace(/^\/GlobalNeedFinder/i, '');
   }
-  return path;
+
+  // Ensure trailing slash removal unless it's just '/'
+  if (path.length > 1 && path.endsWith('/')) {
+    path = path.slice(0, -1);
+  }
+
+  return path || '/';
 }
 
 export default function App() {
@@ -76,11 +84,19 @@ export default function App() {
     }
 
     const [pathname, search] = path.split('?');
-    const isGhPages = window.location.pathname.startsWith('/GlobalNeedFinder');
-    const fullPath = isGhPages ? `/GlobalNeedFinder${pathname === '/' ? '' : pathname}` : pathname;
-    const finalUrl = `${fullPath || '/'}${search ? '?' + search : ''}`;
+    const isGhPages = window.location.pathname.toLowerCase().startsWith('/globalneedfinder');
+    
+    // Normalize target route
+    let targetPath = pathname.startsWith('/') ? pathname : `/${pathname}`;
+    if (targetPath.length > 1 && targetPath.endsWith('/')) {
+      targetPath = targetPath.slice(0, -1);
+    }
+
+    const fullPath = isGhPages ? `/GlobalNeedFinder${targetPath}` : targetPath;
+    const finalUrl = `${fullPath}${search ? '?' + search : ''}`;
+
     window.history.pushState({}, '', finalUrl);
-    setCurrentPath(pathname || '/');
+    setCurrentPath(targetPath || '/');
     setSearchParams(new URLSearchParams(search || ''));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -97,7 +113,14 @@ export default function App() {
       return <EditNeedPage id={id} navigate={navigate} />;
     }
 
-    if (currentPath.startsWith('/provider/') && !currentPath.includes('/dashboard') && !currentPath.includes('/needs') && !currentPath.includes('/profile') && !currentPath.includes('/listings') && !currentPath.includes('/offers')) {
+    if (
+      currentPath.startsWith('/provider/') &&
+      !currentPath.includes('/dashboard') &&
+      !currentPath.includes('/needs') &&
+      !currentPath.includes('/profile') &&
+      !currentPath.includes('/listings') &&
+      !currentPath.includes('/offers')
+    ) {
       const id = currentPath.replace('/provider/', '');
       return <ProviderDetailPage id={id} navigate={navigate} />;
     }
