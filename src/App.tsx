@@ -38,10 +38,16 @@ import { ForgotPasswordPage } from './pages/ForgotPasswordPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { TermsPage } from './pages/TermsPage';
 
+function getAppPath(pathname: string = window.location.pathname): string {
+  let path = pathname || '/';
+  if (path.startsWith('/GlobalNeedFinder')) {
+    path = path.replace(/^\/GlobalNeedFinder/, '') || '/';
+  }
+  return path;
+}
+
 export default function App() {
-  const [currentPath, setCurrentPath] = useState<string>(
-    window.location.pathname || '/'
-  );
+  const [currentPath, setCurrentPath] = useState<string>(getAppPath());
   const [searchParams, setSearchParams] = useState<URLSearchParams>(
     new URLSearchParams(window.location.search)
   );
@@ -55,7 +61,7 @@ export default function App() {
 
     // 3. Listen to popstate for browser back/forward buttons
     const handlePopState = () => {
-      setCurrentPath(window.location.pathname || '/');
+      setCurrentPath(getAppPath());
       setSearchParams(new URLSearchParams(window.location.search));
     };
 
@@ -70,8 +76,11 @@ export default function App() {
     }
 
     const [pathname, search] = path.split('?');
-    window.history.pushState({}, '', path);
-    setCurrentPath(pathname);
+    const isGhPages = window.location.pathname.startsWith('/GlobalNeedFinder');
+    const fullPath = isGhPages ? `/GlobalNeedFinder${pathname === '/' ? '' : pathname}` : pathname;
+    const finalUrl = `${fullPath || '/'}${search ? '?' + search : ''}`;
+    window.history.pushState({}, '', finalUrl);
+    setCurrentPath(pathname || '/');
     setSearchParams(new URLSearchParams(search || ''));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
