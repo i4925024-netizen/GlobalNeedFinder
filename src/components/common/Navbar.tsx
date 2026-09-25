@@ -231,6 +231,20 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
                           Provider Dashboard
                         </button>
                         <button
+                          onClick={() => handleNav('/provider/listings')}
+                          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-left transition"
+                        >
+                          <Layers className="w-4 h-4 text-slate-400" />
+                          My Products & Listings
+                        </button>
+                        <button
+                          onClick={() => handleNav('/provider/listings/new')}
+                          className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-emerald-700 hover:bg-emerald-50 text-left transition"
+                        >
+                          <PlusCircle className="w-4 h-4 text-emerald-600" />
+                          + List Product / Service
+                        </button>
+                        <button
                           onClick={() => handleNav('/provider/profile')}
                           className="w-full flex items-center gap-2.5 px-3 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-blue-600 text-left transition"
                         >
@@ -376,6 +390,18 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
                 className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg"
               >
                 Provider Dashboard
+              </button>
+              <button
+                onClick={() => handleNav('/provider/listings')}
+                className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg"
+              >
+                My Products & Catalog
+              </button>
+              <button
+                onClick={() => handleNav('/provider/listings/new')}
+                className="w-full text-left px-3 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 rounded-lg"
+              >
+                + List a Product / Service
               </button>
               <button
                 onClick={() => handleNav('/messages')}
