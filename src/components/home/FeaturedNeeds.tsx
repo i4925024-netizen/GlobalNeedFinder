@@ -54,29 +54,47 @@ export const FeaturedNeeds: React.FC<FeaturedNeedsProps> = ({ navigate }) => {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 bg-white p-1 rounded-xl border border-slate-200 self-start sm:self-auto">
-            <button
-              onClick={() => setActiveTab('needs')}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition ${
-                activeTab === 'needs'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Layers className="w-3.5 h-3.5" />
-              Customer Needs ({needs.length})
-            </button>
-            <button
-              onClick={() => setActiveTab('listings')}
-              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-bold transition ${
-                activeTab === 'listings'
-                  ? 'bg-blue-600 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Tag className="w-3.5 h-3.5" />
-              Provider Listings ({listings.length})
-            </button>
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-slate-200 shadow-xs">
+              <button
+                onClick={() => setActiveTab('listings')}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition ${
+                  activeTab === 'listings'
+                    ? 'bg-emerald-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Tag className="w-3.5 h-3.5" />
+                Products & Services ({listings.length})
+              </button>
+              <button
+                onClick={() => setActiveTab('needs')}
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-bold transition ${
+                  activeTab === 'needs'
+                    ? 'bg-blue-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                Customer Needs ({needs.length})
+              </button>
+            </div>
+
+            {activeTab === 'listings' ? (
+              <button
+                onClick={() => navigate('/provider/listings/new')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-300 rounded-lg text-xs font-bold transition"
+              >
+                + List Product
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate('/post-need')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-300 rounded-lg text-xs font-bold transition"
+              >
+                + Post Need
+              </button>
+            )}
           </div>
         </div>
 
@@ -133,16 +151,26 @@ export const FeaturedNeeds: React.FC<FeaturedNeedsProps> = ({ navigate }) => {
               </div>
             ) : (
               <div className="text-center py-12 bg-white rounded-xl border border-slate-200 p-8">
-                <p className="text-sm text-slate-500">No active provider listings yet.</p>
+                <Tag className="w-10 h-10 text-slate-300 mx-auto mb-2" />
+                <p className="text-sm font-semibold text-slate-700">No active products or services listed yet</p>
+                <p className="text-xs text-slate-500 mt-1 mb-4">
+                  Be the first to list your catalog items, products, or service offerings.
+                </p>
+                <button
+                  onClick={() => navigate('/provider/listings/new')}
+                  className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold transition shadow-xs"
+                >
+                  + List a Product or Service
+                </button>
               </div>
             )}
 
             <div className="mt-8 text-center">
               <button
-                onClick={() => navigate('/providers')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 hover:text-blue-600 hover:border-blue-400 text-xs font-bold shadow-xs transition"
+                onClick={() => navigate('/products')}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-700 hover:text-emerald-700 hover:border-emerald-400 text-xs font-bold shadow-xs transition"
               >
-                Browse All Provider Listings <ArrowRight className="w-4 h-4" />
+                Browse All Products & Services <ArrowRight className="w-4 h-4" />
               </button>
             </div>
           </div>

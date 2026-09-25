@@ -85,7 +85,29 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
           </div>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-5">
+            <button
+              onClick={() => handleNav('/products')}
+              className={`text-sm font-medium transition flex items-center gap-1.5 ${
+                currentPath === '/products' || currentPath.includes('type=listings')
+                  ? 'text-blue-600 font-semibold'
+                  : 'text-slate-600 hover:text-blue-600'
+              }`}
+            >
+              <Tag className="w-4 h-4 text-emerald-600" />
+              Products & Services
+            </button>
+            <button
+              onClick={() => handleNav('/needs')}
+              className={`text-sm font-medium transition flex items-center gap-1.5 ${
+                currentPath === '/needs'
+                  ? 'text-blue-600 font-semibold'
+                  : 'text-slate-600 hover:text-blue-600'
+              }`}
+            >
+              <Layers className="w-4 h-4 text-blue-600" />
+              Customer Needs
+            </button>
             <button
               onClick={() => handleNav('/categories')}
               className={`text-sm font-medium transition flex items-center gap-1.5 ${
@@ -108,26 +130,25 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
               <HelpCircle className="w-4 h-4" />
               How It Works
             </button>
-            <button
-              onClick={() => handleNav('/provider/needs')}
-              className={`text-sm font-medium transition flex items-center gap-1.5 ${
-                currentPath.startsWith('/provider')
-                  ? 'text-blue-600 font-semibold'
-                  : 'text-slate-600 hover:text-blue-600'
-              }`}
-            >
-              <Briefcase className="w-4 h-4" />
-              For Providers
-            </button>
           </nav>
 
           {/* Right Action Area */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-2.5">
+            <button
+              onClick={() => handleNav('/provider/listings/new')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg border border-emerald-300 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition shadow-xs"
+              title="Add a product or service you are selling"
+            >
+              <PlusCircle className="w-3.5 h-3.5 text-emerald-600" />
+              + List Product / Service
+            </button>
+
             <button
               onClick={() => handleNav('/post-need')}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 text-white shadow-sm hover:bg-blue-700 active:scale-98 transition"
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold rounded-lg bg-blue-600 text-white shadow-xs hover:bg-blue-700 active:scale-98 transition"
+              title="Post what you need and get quotes"
             >
-              <PlusCircle className="w-4 h-4" />
+              <PlusCircle className="w-3.5 h-3.5" />
               Post a Need
             </button>
 
@@ -332,15 +353,38 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-6 space-y-3 animate-in slide-in-from-top-2 duration-150">
-          <button
-            onClick={() => handleNav('/post-need')}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 text-sm font-bold text-white bg-blue-600 rounded-lg shadow-sm"
-          >
-            <PlusCircle className="w-4 h-4" />
-            Post a Need
-          </button>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              onClick={() => handleNav('/provider/listings/new')}
+              className="flex items-center justify-center gap-1.5 py-2.5 px-3 text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-300 rounded-lg shadow-xs"
+            >
+              <PlusCircle className="w-4 h-4 text-emerald-600" />
+              + List Product
+            </button>
+            <button
+              onClick={() => handleNav('/post-need')}
+              className="flex items-center justify-center gap-1.5 py-2.5 px-3 text-xs font-bold text-white bg-blue-600 rounded-lg shadow-xs"
+            >
+              <PlusCircle className="w-4 h-4" />
+              + Post a Need
+            </button>
+          </div>
 
           <div className="space-y-1 pt-2">
+            <button
+              onClick={() => handleNav('/products')}
+              className="w-full text-left px-3 py-2 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 rounded-lg flex items-center gap-2"
+            >
+              <Tag className="w-4 h-4 text-emerald-600" />
+              Browse Products & Services
+            </button>
+            <button
+              onClick={() => handleNav('/needs')}
+              className="w-full text-left px-3 py-2 text-sm font-semibold text-blue-700 hover:bg-blue-50 rounded-lg flex items-center gap-2"
+            >
+              <Layers className="w-4 h-4 text-blue-600" />
+              Browse Customer Needs
+            </button>
             <button
               onClick={() => handleNav('/categories')}
               className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg"
@@ -352,12 +396,6 @@ export const Navbar: React.FC<NavbarProps> = ({ currentPath, navigate }) => {
               className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg"
             >
               How It Works
-            </button>
-            <button
-              onClick={() => handleNav('/provider/needs')}
-              className="w-full text-left px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 rounded-lg"
-            >
-              Browse Needs (For Providers)
             </button>
           </div>
 

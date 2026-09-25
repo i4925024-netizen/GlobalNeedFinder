@@ -141,6 +141,9 @@ export default function App() {
         return <HomePage navigate={navigate} />;
       case '/search':
         return <SearchPage navigate={navigate} urlParams={searchParams} />;
+      case '/products':
+      case '/listings':
+        return <SearchPage navigate={navigate} urlParams={new URLSearchParams('type=listings')} />;
       case '/needs':
         return <NeedsPage navigate={navigate} />;
       case '/post-need':

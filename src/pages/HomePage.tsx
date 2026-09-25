@@ -27,7 +27,7 @@ export const HomePage: React.FC<HomePageProps> = ({ navigate }) => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <HeroSection onSearch={handleHeroSearch} />
+      <HeroSection onSearch={handleHeroSearch} navigate={navigate} />
       <CategoryGrid onSelectCategory={handleSelectCategory} />
       <FeaturedNeeds navigate={navigate} />
       <HowItWorksSection />

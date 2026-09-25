@@ -20,9 +20,14 @@ export const SearchPage: React.FC<SearchPageProps> = ({ navigate, urlParams }) =
   const [category, setCategory] = useState(urlParams.get('category') || 'all');
   const [country, setCountry] = useState(urlParams.get('country') || 'all');
   const [city, setCity] = useState(urlParams.get('city') || '');
-  const [activeTab, setActiveTab] = useState<'needs' | 'listings' | 'providers'>(
-    (urlParams.get('type') as any) || 'needs'
-  );
+  const getInitialTab = (): 'needs' | 'listings' | 'providers' => {
+    const t = urlParams.get('type') || urlParams.get('tab');
+    if (t === 'listings' || t === 'products') return 'listings';
+    if (t === 'providers') return 'providers';
+    return 'needs';
+  };
+
+  const [activeTab, setActiveTab] = useState<'needs' | 'listings' | 'providers'>(getInitialTab());
 
   const [needs, setNeeds] = useState<Need[]>([]);
   const [listings, setListings] = useState<Listing[]>([]);
@@ -35,8 +40,13 @@ export const SearchPage: React.FC<SearchPageProps> = ({ navigate, urlParams }) =
     setCategory(urlParams.get('category') || 'all');
     setCountry(urlParams.get('country') || 'all');
     setCity(urlParams.get('city') || '');
-    if (urlParams.get('type')) {
-      setActiveTab(urlParams.get('type') as any);
+    const t = urlParams.get('type') || urlParams.get('tab');
+    if (t === 'listings' || t === 'products') {
+      setActiveTab('listings');
+    } else if (t === 'providers') {
+      setActiveTab('providers');
+    } else if (t === 'needs') {
+      setActiveTab('needs');
     }
   }, [urlParams]);
 
@@ -238,13 +248,22 @@ export const SearchPage: React.FC<SearchPageProps> = ({ navigate, urlParams }) =
           </button>
         </div>
 
-        <button
-          onClick={() => navigate('/post-need')}
-          className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition"
-        >
-          <PlusCircle className="w-3.5 h-3.5" />
-          Post Requirement
-        </button>
+        <div className="hidden sm:flex items-center gap-2">
+          <button
+            onClick={() => navigate('/provider/listings/new')}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 rounded-lg transition"
+          >
+            <PlusCircle className="w-3.5 h-3.5 text-emerald-600" />
+            + List Product / Service
+          </button>
+          <button
+            onClick={() => navigate('/post-need')}
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-300 rounded-lg transition"
+          >
+            <PlusCircle className="w-3.5 h-3.5" />
+            + Post Requirement
+          </button>
+        </div>
       </div>
 
       {/* Results Rendering */}
